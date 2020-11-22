@@ -1,0 +1,4 @@
+deps
+.env
+discordia.log
+gateway.json
