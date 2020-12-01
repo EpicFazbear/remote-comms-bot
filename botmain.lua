@@ -5,7 +5,7 @@ local query = require("querystring")
 client = discordia.Client()
 activated = true
 prefix = process.env.PREFIX
-whitelistOnly = (process.env.WHITELIST_ONLY == "false" and false) or true
+whitelistOnly = (process.env.WHITELIST_ONLY == "true" and true) or false
 serverUrl = process.env.SERVER_URL
 mainChannel = process.env.MAIN_CHANNEL
 admins = json.decode(process.env.ADMINS)
