@@ -82,6 +82,7 @@ return function(ENV)
 					return successful, {string.sub(list1, 1, #list1 - 2), string.sub(list2, 1, #list2 - 2)}
 				end
 			end
+			return false, "Invalid user"
 		end;
 
 		checkList = function(list, value)
