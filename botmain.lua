@@ -28,7 +28,7 @@ setfenv(1, previous) -- Loads our functions
 
 client:on("ready", function()
 --	client:setStatus("invisible") -- Bravo Six, going dark.
---	client:setGame("Sending and recieving messages from within ROBLOX!")
+	client:setGame("Sending and recieving messages from within ROBLOX!")
 	owner = ownerOverride or client.owner.id
 --	client:getChannel(logsChannel):send("***{!} COMMUNICATIONS BOT HAS BEEN ACTIVATED {!}***")
 	print("***COMMUNICATIONS BOT HAS BEEN ACTIVATED***")
