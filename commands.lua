@@ -10,7 +10,7 @@ return function(ENV)
 			"\n			`enable` - Enables the chat hook"..
 			"\n			`disable` - Disables the chat hook"..
 			"\n			`clear` - Clears the communication file"..
-			"\n			`whitelist-only` - Toggles on/off whitelist-only mode"..
+			"\n			`setwhitelist` - Toggles on/off whitelist-only mode"..
 			"\n			`whitelist <user/userid>` - Whitelists the mentioned user or userid"..
 			"\n			`unwhitelist <user/userid>` - Unwhitelists the mentioned user or userid"..
 			"\n			`whitelsited` - Displays the usernames of all whitelisted users"..
@@ -65,7 +65,7 @@ return function(ENV)
 			message:reply("`Successfully set current channel as communcations channel.`")
 		end;
 
-		["whitelist-only"] = function(self, message)
+		["setwhitelist"] = function(self, message)
 			whitelistOnly = not whitelistOnly
 			if whitelistOnly then
 				message:reply("`Successfully **enabled** whitelisting restrictions.`")
