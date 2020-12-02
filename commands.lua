@@ -77,40 +77,69 @@ return function(ENV)
 		["whitelist"] = function(self, message)
 			local userid = string.sub(message.content, string.len(prefix) + string.len(self) + 2)
 			local users = message.mentionedUsers
-			local send = modifyList(userid, users, whitelisted, true)
-			message:reply("`Successfully whitelisted ".. send ..".`")
-			modifyList(userid, users, blacklisted, false)
+			local check, returned = checkPermissions(message.author.id, userid, users)
+			local send = modifyList(message.author.id, userid, users, whitelisted, true)
+			modifyList(message.author.id, userid, users, blacklisted, false)
+			if check then
+				message:reply("`Successfully whitelisted ".. send ..".`")
+			elseif type(returned) == "table" then
+				message:reply("`Successfully whitelisted ".. returned[1] ..".`\n`Could not whitelist ".. returned[2] .." because they have the same permission level as you or higher.`")
+			else
+				message:reply("`Could not whitelist ".. returned .." because they have the same permission level as you or higher.`")
+			end
 		end;
 
 		["unwhitelist"] = function(self, message)
 			local userid = string.sub(message.content, string.len(prefix) + string.len(self) + 2)
 			local users = message.mentionedUsers
-			local send = modifyList(userid, users, whitelisted, false)
-			message:reply("`Successfully unwhitelisted ".. send ..".`")
+			local check, returned = checkPermissions(message.author.id, userid, users)
+			local send = modifyList(message.author.id, userid, users, whitelisted, false)
+			if check then
+				message:reply("`Successfully unwhitelisted ".. send ..".`")
+			elseif type(returned) == "table" then
+				message:reply("`Successfully unwhitelisted ".. returned[1] ..".`\n`Could not unwhitelist ".. returned[2] .." because they have the same permission level as you or higher.`")
+			else
+				message:reply("`Could not unwhitelist ".. returned .." because they have the same permission level as you or higher.`")
+			end
 		end;
 
 		["blacklist"] = function(self, message)
 			local userid = string.sub(message.content, string.len(prefix) + string.len(self) + 2)
 			local users = message.mentionedUsers
-			local send = modifyList(userid, users, blacklisted, true)
-			message:reply("`Successfully blacklisted ".. send ..".`")
-			modifyList(userid, users, whitelisted, false)
+			local check, returned = checkPermissions(message.author.id, userid, users)
+			local send = modifyList(message.author.id, userid, users, blacklisted, true)
+			modifyList(message.author.id, userid, users, whitelisted, false)
+			modifyList(message.author.id, userid, users, admins, false)
+			if check then
+				message:reply("`Successfully blacklisted ".. send ..".`")
+			elseif type(returned) == "table" then
+				message:reply("`Successfully blacklisted ".. returned[1] ..".`\n`Could not blacklist ".. returned[2] .." because they have the same permission level as you or higher.`")
+			else
+				message:reply("`Could not blacklist ".. returned .." because they have the same permission level as you or higher.`")
+			end
 		end;
 
 		["unblacklist"] = function(self, message)
 			local userid = string.sub(message.content, string.len(prefix) + string.len(self) + 2)
 			local users = message.mentionedUsers
-			local send = modifyList(userid, users, blacklisted, false)
-			message:reply("`Successfully unblacklisted ".. send ..".`")
+			local check, returned = checkPermissions(message.author.id, userid, users)
+			local send = modifyList(message.author.id, userid, users, blacklisted, false)
+			if check then
+				message:reply("`Successfully unblacklisted ".. send ..".`")
+			elseif type(returned) == "table" then
+				message:reply("`Successfully unblacklisted ".. returned[1] ..".`\n`Could not unblacklist ".. returned[2] .." because they have the same permission level as you or higher.`")
+			else
+				message:reply("`Could not unblacklist ".. returned .." because they have the same permission level as you or higher.`")
+			end
 		end;
 
 		["admin"] = function(self, message)
 			if message.author.id == owner then
 				local userid = string.sub(message.content, string.len(prefix) + string.len(self) + 2)
 				local users = message.mentionedUsers
-				local send = modifyList(userid, users, admins, true)
+				local send = modifyList(message.author.id, userid, users, admins, true)
+				modifyList(message.author.id, userid, users, blacklisted, false)
 				message:reply("`Successfully admined ".. send ..".`")
-				modifyList(userid, users, blacklisted, false)
 			end
 		end;
 
@@ -118,7 +147,7 @@ return function(ENV)
 			if message.author.id == owner then
 				local userid = string.sub(message.content, string.len(prefix) + string.len(self) + 2)
 				local users = message.mentionedUsers
-				local send = modifyList(userid, users, admins, false)
+				local send = modifyList(message.author.id, userid, users, admins, false)
 				message:reply("`Successfully unadmined ".. send ..".`")
 			end
 		end;
