@@ -13,7 +13,7 @@ admins = json.decode(process.env.ADMINS)
 whitelisted = json.decode(process.env.WHITELISTED)
 blacklisted = json.decode(process.env.BLACKLISTED)
 
---[[
+--[[ -- TODO: Add auth token for sending to and recieving from server
 	0 - None/Blacklisted
 	1 - Regular User
 	2 - Whitelisted
@@ -30,7 +30,7 @@ client:on("ready", function()
 --	client:setStatus("invisible") -- Bravo Six, going dark.
 	client:setGame("Sending and recieving messages from within ROBLOX!")
 	owner = ownerOverride or client.owner.id
---	client:getChannel(logsChannel):send("***{!} COMMUNICATIONS BOT HAS BEEN ACTIVATED {!}***")
+--	client:getChannel("channel-id"):send("***{!} COMMUNICATIONS BOT HAS BEEN ACTIVATED {!}***")
 	print("***COMMUNICATIONS BOT HAS BEEN ACTIVATED***")
 end)
 
@@ -39,7 +39,7 @@ client:on("messageCreate", function(message)
 	if message.author == client.user or message.author.bot == true or message.author.discriminator == 0000 then return end
 
 	for name, cmd in next, commands do -- Runs through our list of commands and connects them to our messageCreate connection
-		if string.match(string.lower(message.content), string.lower(prefix..name)) and (checkList(admins, message.author.id) or message.author.id == owner or name == "help") then
+		if string.match(string.lower(message.content), string.lower(prefix..name.." ")) and (checkList(admins, message.author.id) or message.author.id == owner or name == "help") then
 			cmd(name, message)
 		return end
 	end
