@@ -57,7 +57,6 @@ return function(ENV)
 		end;
 
 		checkPermissions = function(self, single, multiple)
-			local returns = {[0]="blacklisted", "a regular", "whitelisted", "an admin", "an owner"}
 			if tonumber(single) then
 				return getLevel(self) > getLevel(single), getTag(single)
 			end
