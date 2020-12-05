@@ -39,7 +39,7 @@ client:on("messageCreate", function(message)
 	if message.author == client.user or message.author.bot == true or message.author.discriminator == 0000 then return end
 
 	for name, cmd in next, commands do -- Runs through our list of commands and connects them to our messageCreate connection
-		if string.match(string.lower(message.content), string.lower(prefix..name.." ")) and (checkList(admins, message.author.id) or message.author.id == owner or name == "help") then
+		if string.match(string.lower(message.content), string.lower(prefix..name)) and (checkList(admins, message.author.id) or message.author.id == owner or name == "help") then
 			cmd(name, message)
 		return end
 	end
