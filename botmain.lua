@@ -2,16 +2,19 @@ local discordia = require("discordia")
 local http = require("coro-http")
 local json = require("json")
 local query = require("querystring")
+local ENV = process.env
+
 client = discordia.Client()
 activated = true
-prefix = process.env.PREFIX
-whitelistOnly = (process.env.WHITELIST_ONLY == "true" and true) or false
-serverUrl = process.env.SERVER_URL
-mainChannel = process.env.MAIN_CHANNEL
-ownerOverride = process.env.OWNER_OVERRIDE
-admins = json.decode(process.env.ADMINS)
-whitelisted = json.decode(process.env.WHITELISTED)
-blacklisted = json.decode(process.env.BLACKLISTED)
+prefix = ENV.PREFIX
+whitelistOnly = ENV.WHITELIST_ONLY == "true"
+serverUrl = ENV.SERVER_URL
+mainChannel = ENV.MAIN_CHANNEL
+ownerOverride = ENV.OWNER_OVERRIDE
+if ownerOverride == "" then ownerOverride = nil end
+admins = json.decode(ENV.ADMINS)
+whitelisted = json.decode(ENV.WHITELISTED)
+blacklisted = json.decode(ENV.BLACKLISTED)
 
 --[[ -- TODO: Add auth token for sending to and recieving from server
 	0 - None/Blacklisted
@@ -27,20 +30,29 @@ for i,v in pairs(functions) do previous[i] = v end
 setfenv(1, previous) -- Loads our functions
 
 client:on("ready", function()
---	client:setStatus("invisible") -- Bravo Six, going dark.
-	client:setGame("Sending and recieving messages from within ROBLOX!")
+	if ENV.INVISIBLE == "true" then
+		client:setStatus("invisible") -- Bravo Six, going dark.
+	end
+	if string.lower(ENV.STATUS) ~= "none" then
+		client:setGame(ENV.STATUS) -- "Sending and recieving messages from within ROBLOX!"
+	end
 	owner = ownerOverride or client.owner.id
---	client:getChannel("channel-id"):send("***{!} COMMUNICATIONS BOT HAS BEEN ACTIVATED {!}***")
-	print("***COMMUNICATIONS BOT HAS BEEN ACTIVATED***")
+	client:getChannel(mainChannel):send("***{!} Communications bot has been activated {!}***")
+	print("\n***{!} Communications bot has been activated {!}***")
 end)
 
 
 client:on("messageCreate", function(message)
 	if message.author == client.user or message.author.bot == true or message.author.discriminator == 0000 then return end
 
-	for name, cmd in next, commands do -- Runs through our list of commands and connects them to our messageCreate connection
+	for name, cmdFunction in next, commands do -- Runs through our list of commands and connects them to our messageCreate connection
 		if string.match(string.lower(message.content), string.lower(prefix..name)) and (checkList(admins, message.author.id) or message.author.id == owner or name == "help") then
-			cmd(name, message)
+			local ran, error = pcall(function()
+				cmdFunction(name, message)
+			end)
+			if not ran then
+				message:reply("```~~ AN INTERNAL ERROR HAS OCCURRED ~~\n".. tostring(error) .."```")
+			end
 		return end
 	end
 
@@ -58,4 +70,4 @@ client:on("messageCreate", function(message)
 	end
 end)
 
-client:run("Bot ".. process.env.BOT_TOKEN)
+client:run("Bot ".. ENV.BOT_TOKEN)
