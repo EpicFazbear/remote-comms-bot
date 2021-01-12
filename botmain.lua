@@ -15,6 +15,7 @@ if ownerOverride == "" then ownerOverride = nil end
 admins = json.decode(ENV.ADMINS)
 whitelisted = json.decode(ENV.WHITELISTED)
 blacklisted = json.decode(ENV.BLACKLISTED)
+table.insert(admins, owner)
 
 --[[ -- TODO: Add auth token for sending to and recieving from server
 	0 - None/Blacklisted
