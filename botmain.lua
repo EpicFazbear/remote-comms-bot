@@ -35,7 +35,7 @@ client:on("ready", function()
 		client:setStatus("invisible") -- Bravo Six, going dark.
 	end
 	if string.lower(ENV.STATUS) ~= "none" then
-		client:setGame(ENV.STATUS) -- "Sending and recieving messages from within ROBLOX!"
+		client:setGame(ENV.STATUS)
 	end
 	owner = ownerOverride or client.owner.id
 	client:getChannel(mainChannel):send("***{!} Communications bot has been activated {!}***")
@@ -46,19 +46,23 @@ end)
 client:on("messageCreate", function(message)
 	if message.author == client.user or message.author.bot == true or message.author.discriminator == 0000 then return end
 
-	for name, cmdFunction in next, commands do -- Runs through our list of commands and connects them to our messageCreate connection
-		if string.match(string.lower(message.content), string.lower(prefix..name)) and (checkList(admins, message.author.id) or message.author.id == owner or name == "help") then
-			local ran, error = pcall(function()
-				cmdFunction(name, message)
-			end)
-			if not ran then
-				message:reply("```~~ AN INTERNAL ERROR HAS OCCURRED ~~\n".. tostring(error) .."```")
-			end
-		return end
-	end
+	if string.sub(string.lower(message.content), 1, 1) == prefix then
+		for name, cmdFunction in next, commands do -- Runs through our list of commands and connects them to our messageCreate connection
+			if string.sub(string.lower(message.content), 1, string.len(prefix) + string.len(name)) == string.lower(prefix .. name) and (checkList(admins, message.author.id) or name == "help") then
+				local ran, error = pcall(function()
+					cmdFunction(name, message)
+				end)
+				if not ran then
+					message:reply("```~~ AN INTERNAL ERROR HAS OCCURRED ~~\n".. tostring(error) .."```")
+				end
+			return end
+		end
+	return end
 
-	if string.sub(message.content, 1, 1) ~= prefix and activated and message.channel.id == mainChannel and not checkList(blacklisted, message.author.id) then
+	if activated and message.channel.id == mainChannel then
 		if whitelistOnly and not (checkList(admins, message.author.id) or checkList(whitelisted, message.author.id)) then
+			return
+		elseif checkList(blacklisted, message.author.id) then
 			return
 		end
 		local username = message.member.name
@@ -71,4 +75,4 @@ client:on("messageCreate", function(message)
 	end
 end)
 
-client:run("Bot ".. ENV.BOT_TOKEN)
+client:run("Bot ".. ENV.BOT_TOKEN);
