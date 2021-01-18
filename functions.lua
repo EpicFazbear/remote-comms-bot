@@ -2,6 +2,11 @@ local http = require("coro-http")
 local json = require("json")
 local query = require("querystring")
 
+local charset = {} -- [0-9a-zA-Z]
+for c = 48, 57  do table.insert(charset, string.char(c)) end
+for c = 65, 90  do table.insert(charset, string.char(c)) end
+for c = 97, 122 do table.insert(charset, string.char(c)) end
+
 
 -- Functions used by the other .lua files
 return function(ENV)
@@ -26,6 +31,16 @@ return function(ENV)
 				return body
 			end)
 			return ran and body or "[Content Deleted]"
+		end;
+
+		randomString = function(length)
+			if not length or length <= 0 then length = 5 end
+			math.randomseed(os.clock()^5)
+			local stringz = ""
+			for i = 1, length do
+				stringz = stringz .. charset[math.random(1, #charset)]
+			end
+			return stringz
 		end;
 
 		getTag = function(id)
