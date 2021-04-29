@@ -1,4 +1,4 @@
-deps
 .env
+deps/
 discordia.log
 gateway.json
