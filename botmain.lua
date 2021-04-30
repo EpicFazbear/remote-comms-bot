@@ -1,7 +1,5 @@
 local discordia = require("discordia")
-local http = require("coro-http")
 local json = require("json")
-local query = require("querystring")
 local ENV = process.env
 
 client = discordia.Client()
@@ -17,7 +15,8 @@ whitelisted = json.decode(ENV.WHITELISTED)
 blacklisted = json.decode(ENV.BLACKLISTED)
 table.insert(admins, owner)
 
---[[ -- TODO: Add auth token for sending to and recieving from server
+
+--[[ -- TODO: Add auth check for sending to and recieving from server
 	0 - None/Blacklisted
 	1 - Regular User
 	2 - Whitelisted
@@ -25,10 +24,12 @@ table.insert(admins, owner)
 	4 - Owner
 --]]
 
+-- Injects our external functions into this main script
 local functions = require("./functions.lua")(getfenv(1))
 local previous = getfenv(1)
 for i,v in pairs(functions) do previous[i] = v end
-setfenv(1, previous) -- Loads our functions
+setfenv(1, previous)
+
 
 client:on("ready", function()
 	if ENV.INVISIBLE == "true" then
