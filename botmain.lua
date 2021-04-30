@@ -32,15 +32,27 @@ setfenv(1, previous)
 
 
 client:on("ready", function()
+	owner = ownerOverride or client.owner.id
+	local message = client:getChannel(mainChannel):send("***Starting bot..***")
 	if ENV.INVISIBLE == "true" then
 		client:setStatus("invisible") -- Bravo Six, going dark.
+	else
+		client:setStatus("idle")
+		client:setGame("Initializing..")
 	end
-	if string.lower(ENV.STATUS) ~= "none" then
-		client:setGame(ENV.STATUS)
+	
+	-- TODO: in here, do loading sequence with SQL stuffs
+	message:setContent(message.content .. "\n***Retrieving data from SQL Database..***")
+	print("Retrieving data from SQL Database..")
+
+	if ENV.INVISIBLE ~= "true" then
+		client:setStatus("online")
+		if string.lower(ENV.STATUS) ~= "none" then
+			client:setGame(ENV.STATUS)
+		end
 	end
-	owner = ownerOverride or client.owner.id
-	client:getChannel(mainChannel):send("***{!} Communications bot has been activated {!}***")
-	print("\n***{!} Communications bot has been activated {!}***")
+	message:setContent(message.content .. "\n***{!} Communications bot has been activated {!}***")
+	print("***{!} Communications bot has been activated {!}***")
 end)
 
 
