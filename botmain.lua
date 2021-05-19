@@ -2,6 +2,10 @@ local discordia = require("discordia")
 local json = require("json")
 local ENV = process.env
 
+if ENV == nil then
+	print("Please start your bot using `heroku local` (Search up how to set up the Heroku CLI if you don't know how to do this).")
+end
+
 client = discordia.Client()
 activated = true
 prefix = ENV.PREFIX
@@ -16,16 +20,8 @@ blacklisted = json.decode(ENV.BLACKLISTED)
 table.insert(admins, owner)
 
 
---[[ -- TODO: Add auth check for sending to and recieving from server
-	0 - None/Blacklisted
-	1 - Regular User
-	2 - Whitelisted
-	3 - Admin
-	4 - Owner
---]]
-
--- Injects our external functions into this main script
-local functions = require("./functions.lua")(getfenv(1))
+-- Injects our external variables and functions into the main environment.
+local functions = require("./botinit.lua")(getfenv(1))
 local previous = getfenv(1)
 for i,v in pairs(functions) do previous[i] = v end
 setfenv(1, previous)
@@ -33,25 +29,22 @@ setfenv(1, previous)
 
 client:on("ready", function()
 	owner = ownerOverride or client.owner.id
-	local message = client:getChannel(mainChannel):send("***Starting bot..***")
-	if ENV.INVISIBLE == "true" then
-		client:setStatus("invisible") -- Bravo Six, going dark.
-	else
+	local message
+	if ENV.INVISIBLE ~= "true" then
+		message = client:getChannel(mainChannel):send("***Starting bot..***")
 		client:setStatus("idle")
 		client:setGame("Initializing..")
+	else
+		client:setStatus("invisible") -- Bravo Six, going dark.
 	end
-	
-	-- TODO: in here, do loading sequence with SQL stuffs
-	message:setContent(message.content .. "\n***Retrieving data from SQL Database..***")
-	print("Retrieving data from SQL Database..")
 
 	if ENV.INVISIBLE ~= "true" then
 		client:setStatus("online")
 		if string.lower(ENV.STATUS) ~= "none" then
 			client:setGame(ENV.STATUS)
 		end
+		message:setContent(message.content .. "\n***{!} Communications bot has been activated {!}***")
 	end
-	message:setContent(message.content .. "\n***{!} Communications bot has been activated {!}***")
 	print("***{!} Communications bot has been activated {!}***")
 end)
 
@@ -72,6 +65,14 @@ client:on("messageCreate", function(message)
 		end
 	return end
 
+	--[[ -- TODO: Add auth check for sending to and recieving from server
+		0 - None/Blacklisted
+		1 - Regular User
+		2 - Whitelisted
+		3 - Admin
+		4 - Owner
+	--]]
+
 	if activated and message.channel.id == mainChannel then
 		if whitelistOnly and not (checkList(admins, message.author.id) or checkList(whitelisted, message.author.id)) then
 			return
@@ -87,5 +88,6 @@ client:on("messageCreate", function(message)
 		postAsync(serverUrl, {username = username, content = content, level = level, id = randomString(7)})
 	end
 end)
+
 
 client:run("Bot ".. ENV.BOT_TOKEN);

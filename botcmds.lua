@@ -1,6 +1,6 @@
 -- Our full list of commands.
 return function(ENV)
-	setfenv(1, ENV)
+	setfenv(1, ENV) -- Connects the main environment from botmain.lua into this file.
 
 	return {
 		["help"] = function(self, message)

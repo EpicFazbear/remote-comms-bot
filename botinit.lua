@@ -10,9 +10,9 @@ for c = 97, 122 do table.insert(charset, string.char(c)) end
 
 -- Functions used by the other .lua files
 return function(ENV)
-	setfenv(1, ENV)
+	setfenv(1, ENV) -- Connects the main environment from botmain.lua into this file.
 	return {
-		commands = require("./commands.lua")(ENV); -- Loads in the commands into the table so that it can get loaded into the main environment later.
+		commands = require("./botcmds.lua")(ENV); -- Loads in the commands into the table so that it can get loaded into the main environment later.
 
 		postAsync = function(url, data)
 			local res, body = http.request("POST", url,
