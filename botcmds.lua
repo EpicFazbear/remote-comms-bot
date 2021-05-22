@@ -1,4 +1,5 @@
--- Our full list of commands.
+-- Our full list of commands. --
+
 return function(ENV)
 	setfenv(1, ENV) -- Connects the main environment from botmain.lua into this file.
 

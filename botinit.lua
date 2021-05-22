@@ -1,3 +1,5 @@
+-- Initialization of functions and variables used by the other .lua files. --
+
 local http = require("coro-http")
 local json = require("json")
 local query = require("querystring")
@@ -8,7 +10,6 @@ for c = 65, 90  do table.insert(charset, string.char(c)) end
 for c = 97, 122 do table.insert(charset, string.char(c)) end
 
 
--- Functions used by the other .lua files
 return function(ENV)
 	setfenv(1, ENV) -- Connects the main environment from botmain.lua into this file.
 	return {

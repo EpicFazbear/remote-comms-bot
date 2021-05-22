@@ -1,3 +1,5 @@
+-- This is our main environment for the Discord bot. --
+
 local discordia = require("discordia")
 local json = require("json")
 local ENV = process.env
