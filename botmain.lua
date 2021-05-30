@@ -47,6 +47,7 @@ client:on("ready", function()
 		webhook = client:getChannel(mainChannel):createWebhook(webhookName)
 	end
 	server.Webhook = "https://discordapp.com/api/webhooks/".. webhook.id .."/".. webhook.token
+	server:Init()
 
 	if ENV.INVISIBLE ~= "true" then
 		client:setStatus("online")
