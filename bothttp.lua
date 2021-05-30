@@ -11,6 +11,7 @@ return function(ENV)
 		self.Content = "Hello world\n"
 		self.Webhook = "" -- TODO: find webhook and set here
 		self.Server = http.createServer(function(req, res) -- req.url
+			print("Got request from ".. tostring(req.url))
 			local body
 			local passed = false
 			for _, data in pairs(req.headers) do
