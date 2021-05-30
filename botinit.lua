@@ -25,7 +25,7 @@ return function(ENV)
 				--print("Sent JSON: ".. json.encode(data))
 				return body
 			--]]
-			self.Content = data
+			server.Content = data
 		end;
 
 		filterAsync = function(string)
