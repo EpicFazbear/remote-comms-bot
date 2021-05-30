@@ -44,7 +44,7 @@ client:on("ready", function()
 
 	local webhook = getWebhook(mainChannel)
 	if webhook == nil then
-		webhook = mainChannel:createWebhook(webhookName)
+		webhook = client:getChannel(mainChannel):createWebhook(webhookName)
 	end
 	server.Webhook = "https://discordapp.com/api/webhooks/".. webhook.id .."/".. webhook.token
 
