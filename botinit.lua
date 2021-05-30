@@ -14,14 +14,18 @@ return function(ENV)
 	setfenv(1, ENV) -- Connects the main environment from botmain.lua into this file.
 	return {
 		commands = require("./botcmds.lua")(ENV); -- Loads in the commands into the table so that it can get loaded into the main environment later.
+		server = require("./bothttp.lua")(ENV);
 
 		postAsync = function(url, data)
-			local res, body = http.request("POST", url,
-				{{"Content-Type", "application/json"}},
-				json.encode(data)
-			)
-			--print("Sent JSON: ".. json.encode(data))
-			return body
+			--[[
+				local res, body = http.request("POST", url,
+					{{"Content-Type", "application/json"}},
+					json.encode(data)
+				)
+				--print("Sent JSON: ".. json.encode(data))
+				return body
+			--]]
+			self.Content = data
 		end;
 
 		filterAsync = function(string)
@@ -42,6 +46,15 @@ return function(ENV)
 				stringz = stringz .. charset[math.random(1, #charset)]
 			end
 			return stringz
+		end;
+
+		getWebhook = function(channel)
+			for _, webhook in next, client:getChannel(channel):getWebhooks():toArray() do
+				if webhook.name == webhookName then
+					return webhook
+				end
+			end
+			return nil
 		end;
 
 		getTag = function(id)

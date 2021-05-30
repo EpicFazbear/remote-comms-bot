@@ -1,10 +1,10 @@
--- This is our main environment for the Discord bot. --
+-- This is our main environment for the Discord Bot. --
 
 local discordia = require("discordia")
 local json = require("json")
 local ENV = process.env
 
-if ENV == nil then
+if ENV.PREFIX == nil then
 	print("Please start your bot using `heroku local` (Search up how to set up the Heroku CLI if you don't know how to do this).")
 end
 
@@ -12,6 +12,7 @@ client = discordia.Client()
 activated = true
 prefix = ENV.PREFIX
 whitelistOnly = ENV.WHITELIST_ONLY == "true"
+webhookName = ENV.WEBHOOK_NAME
 serverUrl = ENV.SERVER_URL
 mainChannel = ENV.MAIN_CHANNEL
 ownerOverride = ENV.OWNER_OVERRIDE
@@ -30,6 +31,7 @@ setfenv(1, previous)
 
 
 client:on("ready", function()
+	print("***Starting bot..***")
 	owner = ownerOverride or client.owner.id
 	local message
 	if ENV.INVISIBLE ~= "true" then
@@ -39,6 +41,12 @@ client:on("ready", function()
 	else
 		client:setStatus("invisible") -- Bravo Six, going dark.
 	end
+
+	local webhook = getWebhook(mainChannel)
+	if webhook == nil then
+		webhook = mainChannel:createWebhook(webhookName)
+	end
+	server.Webhook = "https://discordapp.com/api/webhooks/".. webhook.id .."/".. webhook.token
 
 	if ENV.INVISIBLE ~= "true" then
 		client:setStatus("online")
@@ -66,14 +74,6 @@ client:on("messageCreate", function(message)
 			return end
 		end
 	return end
-
-	--[[ -- TODO: Add auth check for sending to and recieving from server
-		0 - None/Blacklisted
-		1 - Regular User
-		2 - Whitelisted
-		3 - Admin
-		4 - Owner
-	--]]
 
 	if activated and message.channel.id == mainChannel then
 		if whitelistOnly and not (checkList(admins, message.author.id) or checkList(whitelisted, message.author.id)) then

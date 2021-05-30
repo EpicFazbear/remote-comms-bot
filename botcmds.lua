@@ -1,4 +1,4 @@
--- Our full list of commands. --
+-- The entire of commands that are registered on the Bot. --
 
 return function(ENV)
 	setfenv(1, ENV) -- Connects the main environment from botmain.lua into this file.
@@ -52,17 +52,12 @@ return function(ENV)
 
 		["setchannel"] = function(self, message)
 			local channel = message.channel
-			mainChannel = channel.id
-			local selected
-			for _, webhook in next, channel:getWebhooks():toArray() do
-				if webhook.name == "Hello! Hello! Hello! Hello! How Low?" then
-					selected = webhook
-				end
-			end
+			local selected = getWebhook(channel.id)
 			if not selected then
-				selected = channel:createWebhook("Hello! Hello! Hello! Hello! How Low?")
+				selected = channel:createWebhook(webhookName)
 			end
-			postAsync(serverUrl, {username = message.member.name, content = tostring("https://discordapp.com/api/webhooks/".. selected.id .."/".. selected.token), level = 4, command = "setwebhook"})
+			server.Webhook = "https://discordapp.com/api/webhooks/".. selected.id .."/".. selected.token
+			--postAsync(serverUrl, {username = message.member.name, content = webhookUrl, level = 4, command = "setwebhook"})
 			message:reply("`Successfully set current channel as communcations channel.`")
 		end;
 
