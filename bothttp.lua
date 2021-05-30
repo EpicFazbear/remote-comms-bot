@@ -1,6 +1,7 @@
 -- Initialization of the HTTP webserver used by ROBLOX to retrieve data from Discord. --
 
 local http = require("http")
+local json = require("json")
 local PRC = process.env
 
 return function(ENV)
@@ -9,9 +10,8 @@ return function(ENV)
 
 	function http_table:Init()
 		self.Content = "Hello world\n"
-		self.Webhook = "" -- TODO: find webhook and set here
+		self.Webhook = ""
 		self.Server = http.createServer(function(req, res) -- req.url
-			print("Got request from ".. tostring(req.url))
 			local body
 			local passed = false
 			for _, data in pairs(req.headers) do
@@ -27,7 +27,7 @@ return function(ENV)
 				local path = req.url
 				if path == "/messages" then
 					res:setHeader("Webhook-URL", tostring(self.Webhook))
-					body = tostring(self.Content)
+					body = json.encode(self.Content)
 				else
 					body = "Invalid request"
 				end
@@ -38,7 +38,7 @@ return function(ENV)
 			res:finish(body)
 		end)
 		self.Server:listen(PRC.PORT)
-		print("WebServer is now running.")
+		print("Webserver is now running!")
 	end
 
 	return http_table
