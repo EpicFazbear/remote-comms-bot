@@ -9,7 +9,7 @@ return function(ENV)
 	local http_table = {}
 
 	function http_table:Init()
-		self.Content = "Hello world\n"
+		self.Content = "Hello world"
 		self.Webhook = ""
 		self.Server = http.createServer(function(req, res) -- req.url
 			local body
