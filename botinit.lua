@@ -1,8 +1,8 @@
 -- Initialization of functions and variables used by the other .lua files. --
 
 local http = require("coro-http")
-local json = require("json")
 local query = require("querystring")
+--local json = require("json")
 
 local charset = {} -- [0-9a-zA-Z]
 for c = 48, 57  do table.insert(charset, string.char(c)) end
