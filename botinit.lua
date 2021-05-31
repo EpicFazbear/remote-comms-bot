@@ -14,18 +14,15 @@ return function(ENV)
 	setfenv(1, ENV) -- Connects the main environment from botmain.lua into this file.
 	return {
 		commands = require("./botcmds.lua")(ENV); -- Loads in the commands into the table so that it can get loaded into the main environment later.
-		server = require("./bothttp.lua")(ENV);
+		server = require("./bothttp.lua")(ENV); -- Loads in our webserver module so that we can initalize it when the bot starts.
 
-		postAsync = function(url, data)
-			--[[
-				local res, body = http.request("POST", url,
-					{{"Content-Type", "application/json"}},
-					json.encode(data)
-				)
-				--print("Sent JSON: ".. json.encode(data))
-				return body
-			--]]
-			server.Content = data
+		postAsync = function(url, data) -- No longer used
+			local res, body = http.request("POST", url,
+				{{"Content-Type", "application/json"}},
+				json.encode(data)
+			)
+			--print("Sent JSON: ".. json.encode(data))
+			return body
 		end;
 
 		filterAsync = function(string)

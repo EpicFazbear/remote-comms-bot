@@ -6,14 +6,15 @@ local ENV = process.env
 
 if ENV.PREFIX == nil then
 	print("Please start your bot using `heroku local` (Search up how to set up the Heroku CLI if you don't know how to do this).")
-end
+	print("If you have started your bot through Heroku, but you're still seeing this message, make sure your `.env` file is present and correctly configured.")
+return end
 
 client = discordia.Client()
 activated = true
 prefix = ENV.PREFIX
 whitelistOnly = ENV.WHITELIST_ONLY == "true"
 webhookName = ENV.WEBHOOK_NAME
-serverUrl = ENV.SERVER_URL
+--serverUrl = ENV.SERVER_URL
 mainChannel = ENV.MAIN_CHANNEL
 ownerOverride = ENV.OWNER_OVERRIDE
 if ownerOverride == "" then ownerOverride = nil end
@@ -31,7 +32,7 @@ setfenv(1, previous)
 
 
 client:on("ready", function()
-	print("***Starting bot..***")
+	print("Starting bot..")
 	owner = ownerOverride or client.owner.id
 	local message
 	if ENV.INVISIBLE ~= "true" then
@@ -82,13 +83,14 @@ client:on("messageCreate", function(message)
 		elseif checkList(blacklisted, message.author.id) then
 			return
 		end
-		local username = message.member.name
+		local username = filterAsync(message.member.name)
 		local content = filterAsync(message.content)
 		local level = getLevel(message.author.id)
 		if string.lower(string.sub(message.content, 1, 3)) == "/e " then
 			message:delete()
 		end
-		postAsync(serverUrl, {username = username, content = content, level = level, id = randomString(7)})
+		--postAsync(serverUrl, {username = username, content = content, level = level, id = randomString(7)})
+		server.Content = {username = username, content = content, level = level, id = randomString(7)}
 	end
 end)
 
