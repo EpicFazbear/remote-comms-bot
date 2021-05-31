@@ -14,8 +14,7 @@
 		"value": "[]"
 	},
 	"BOT_TOKEN": {
-		"description": "The user token that the bot will run from.",
-		"value": ""
+		"description": "The user token that the bot will run from."
 	},
 	"INVISIBLE": {
 		"description": "Determines whether or not the bot will be invisible when turned on.",
@@ -25,27 +24,26 @@
 		"description": "The ID of the default channel that will host the communication link."
 	},
 	"OWNER_OVERRIDE": {
-		"description": "The ID of a user that will be recognized as the owner of the bot. (DON'T CHANGE UNLESS YOU SET THE USER BOT ON A DIFFERENT ACCOUNT)"
+		"description": "The ID of a user that will be recognized as the owner of the bot.\n(DON'T CHANGE UNLESS YOU'VE SET THE USER BOT ON A DIFFERENT ACCOUNT)"
 	},
 	"PASSWORD": {
 		"description": "The password that is used to retrieve data from the server",
 		"value": "CHANGE_THIS_AND_SECURE"
 	},
 	"STATUS": {
-		"description": "",
-		"value": "[]"
+		"description": "What the bot's user status will be set to when it is online."
 	},
 	"WEBHOOK_NAME": {
-		"description": "",
-		"value": "[]"
+		"description": "The name of the webhook that the bot uses for communcating with ROBLOX. (ROBLOX --> Discord)",
+		"value": "Hello! Hello! Hello! Hello! How Low?"
 	},
 	"WHITELISTED": {
-		"description": "",
+		"description": "A JSON-encoded list of UserIDs that can access the bot when whitelist-only mode is enabled.",
 		"value": "[]"
 	},
 	"WHITELIST_ONLY": {
-		"description": "",
-		"value": "[]"
+		"description": "Changes whether or not only admins and whitelisted users can access the bot and its communcations.",
+		"value": "false"
 	}
   }
 }
