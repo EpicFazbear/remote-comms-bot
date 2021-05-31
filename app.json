@@ -23,15 +23,13 @@
 	"MAIN_CHANNEL": {
 		"description": "The ID of the default channel that will host the communication link."
 	},
-	"OWNER_OVERRIDE": {
-		"description": "The ID of a user that will be recognized as the owner of the bot.\n(DON'T CHANGE UNLESS YOU'VE SET THE USER BOT ON A DIFFERENT ACCOUNT)"
-	},
 	"PASSWORD": {
 		"description": "The password that is used to retrieve data from the server",
 		"value": "CHANGE_THIS_AND_SECURE"
 	},
 	"STATUS": {
-		"description": "What the bot's user status will be set to when it is online."
+		"description": "What the bot's user status will be set to when it is online.",
+		"value": "None"
 	},
 	"WEBHOOK_NAME": {
 		"description": "The name of the webhook that the bot uses for communcating with ROBLOX. (ROBLOX --> Discord)",
