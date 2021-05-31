@@ -27,6 +27,10 @@
 		"description": "The password that is used to retrieve data from the server",
 		"value": "CHANGE_THIS_AND_SECURE"
 	},
+	"PREFIX": {
+		"description": "The prefix used to run commands. Messages that start with this prefix will be ignored by the commications link.",
+		"value": ";"
+	},
 	"STATUS": {
 		"description": "What the bot's user status will be set to when it is online.",
 		"value": "None"
@@ -35,13 +39,13 @@
 		"description": "The name of the webhook that the bot uses for communcating with ROBLOX. (ROBLOX --> Discord)",
 		"value": "Hello! Hello! Hello! Hello! How Low?"
 	},
-	"WHITELISTED": {
-		"description": "A JSON-encoded list of UserIDs that can access the bot when whitelist-only mode is enabled.",
-		"value": "[]"
-	},
 	"WHITELIST_ONLY": {
 		"description": "Changes whether or not only admins and whitelisted users can access the bot and its communcations.",
 		"value": "false"
+	},
+	"WHITELISTED": {
+		"description": "A JSON-encoded list of UserIDs that can access the bot when whitelist-only mode is enabled.",
+		"value": "[]"
 	}
   }
 }
