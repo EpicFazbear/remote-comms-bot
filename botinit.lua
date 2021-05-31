@@ -1,6 +1,8 @@
+-- Initialization of functions and variables used by the other .lua files. --
+
 local http = require("coro-http")
-local json = require("json")
 local query = require("querystring")
+--local json = require("json")
 
 local charset = {} -- [0-9a-zA-Z]
 for c = 48, 57  do table.insert(charset, string.char(c)) end
@@ -8,13 +10,13 @@ for c = 65, 90  do table.insert(charset, string.char(c)) end
 for c = 97, 122 do table.insert(charset, string.char(c)) end
 
 
--- Functions used by the other .lua files
 return function(ENV)
 	setfenv(1, ENV) -- Connects the main environment from botmain.lua into this file.
 	return {
 		commands = require("./botcmds.lua")(ENV); -- Loads in the commands into the table so that it can get loaded into the main environment later.
+		server = require("./bothttp.lua")(ENV); -- Loads in our webserver module so that we can initalize it when the bot starts.
 
-		postAsync = function(url, data)
+		postAsync = function(url, data) -- No longer used
 			local res, body = http.request("POST", url,
 				{{"Content-Type", "application/json"}},
 				json.encode(data)
@@ -41,6 +43,15 @@ return function(ENV)
 				stringz = stringz .. charset[math.random(1, #charset)]
 			end
 			return stringz
+		end;
+
+		getWebhook = function(channel)
+			for _, webhook in next, client:getChannel(channel):getWebhooks():toArray() do
+				if webhook.name == webhookName then
+					return webhook
+				end
+			end
+			return nil
 		end;
 
 		getTag = function(id)
