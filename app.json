@@ -1,0 +1,51 @@
+{
+	"name": "remote-comms-bot",
+	"description": "A lua-based Discord bot.",
+	"repository": "https://github.com/EpicFazbear/remote-comms-bot",
+	"keywords": ["lua", "roblox", "discord-bot"],
+	"buildpacks": [{"url": "https://github.com/squeek502/heroku-buildpack-luvit"}],
+	"env": {
+	"ADMINS": {
+		"description": "A JSON-encoded list of UserIDs that will be given bot administrative rights.",
+		"value": "[]"
+	},
+	"BLACKLISTED": {
+		"description": "A JSON-encoded list of UserIDs that will be blacklisted from using the bot.",
+		"value": "[]"
+	},
+	"BOT_TOKEN": {
+		"description": "The user token that the bot will run from.",
+		"value": ""
+	},
+	"INVISIBLE": {
+		"description": "Determines whether or not the bot will be invisible when turned on.",
+		"value": "false"
+	},
+	"MAIN_CHANNEL": {
+		"description": "The ID of the default channel that will host the communication link."
+	},
+	"OWNER_OVERRIDE": {
+		"description": "The ID of a user that will be recognized as the owner of the bot. (DON'T CHANGE UNLESS YOU SET THE USER BOT ON A DIFFERENT ACCOUNT)"
+	},
+	"PASSWORD": {
+		"description": "The password that is used to retrieve data from the server",
+		"value": "CHANGE_THIS_AND_SECURE"
+	},
+	"STATUS": {
+		"description": "",
+		"value": "[]"
+	},
+	"WEBHOOK_NAME": {
+		"description": "",
+		"value": "[]"
+	},
+	"WHITELISTED": {
+		"description": "",
+		"value": "[]"
+	},
+	"WHITELIST_ONLY": {
+		"description": "",
+		"value": "[]"
+	}
+  }
+}

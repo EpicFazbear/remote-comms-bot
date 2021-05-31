@@ -1,4 +1,5 @@
--- Our full list of commands.
+-- The entire of commands that are registered on the Bot. --
+
 return function(ENV)
 	setfenv(1, ENV) -- Connects the main environment from botmain.lua into this file.
 
@@ -40,28 +41,25 @@ return function(ENV)
 
 		["send"] = function(self, message) -- Debug Command (No text filter)
 			local msgcontent = string.sub(message.content, string.len(prefix) + string.len(self) + 2)
-			postAsync(serverUrl, {username = message.member.name, content = msgcontent, level = 4})
+			--postAsync(serverUrl, {username = message.member.name, content = msgcontent, level = 4})
+			server.Content = {username = message.member.name, content = msgcontent, level = 4, id = randomString(7)}
 		end;
 
 		["clear"] = function(self, message)
 			activated = false
-			postAsync(serverUrl, {"Hello! Hello! Hello! Hello! How Low?"})
+			--postAsync(serverUrl, {"Hello! Hello! Hello! Hello! How Low?"})
+			server.Content = "Hello! Hello! Hello! Hello! How Low?"
 			message:reply("`Successfully cleared the server communication file.`")
 		end;
 
 		["setchannel"] = function(self, message)
 			local channel = message.channel
-			mainChannel = channel.id
-			local selected
-			for _, webhook in next, channel:getWebhooks():toArray() do
-				if webhook.name == "Hello! Hello! Hello! Hello! How Low?" then
-					selected = webhook
-				end
-			end
+			local selected = getWebhook(channel.id)
 			if not selected then
-				selected = channel:createWebhook("Hello! Hello! Hello! Hello! How Low?")
+				selected = channel:createWebhook(webhookName)
 			end
-			postAsync(serverUrl, {username = message.member.name, content = tostring("https://discordapp.com/api/webhooks/".. selected.id .."/".. selected.token), level = 4, command = "setwebhook"})
+			--postAsync(serverUrl, {username = message.member.name, content = webhookUrl, level = 4, command = "setwebhook"})
+			server.Webhook = "https://discordapp.com/api/webhooks/".. selected.id .."/".. selected.token
 			message:reply("`Successfully set current channel as communcations channel.`")
 		end;
 
