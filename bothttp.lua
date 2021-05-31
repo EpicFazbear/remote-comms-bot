@@ -9,7 +9,7 @@ return function(ENV)
 	local http_table = {}
 
 	function http_table:Init()
-		self.Content = "Hello world"
+		self.Content = "Hello! Hello! Hello! Hello! How Low?"
 		self.Webhook = ""
 		self.Server = http.createServer(function(req, res) -- req.url
 			local body
@@ -21,18 +21,22 @@ return function(ENV)
 					end
 				end
 			end
-		
-			res:setHeader("Content-Type", "text/plain")
-			if passed == true then
-				local path = req.url
-				if path == "/messages" then
+
+			local path = req.url
+			if path == "/messages" then
+				if passed == true then
+					res:setHeader("Content-Type", "text/plain")
 					res:setHeader("Webhook-URL", tostring(self.Webhook))
 					body = json.encode(self.Content)
 				else
-					body = "Invalid request"
+					body = "Bad password"
 				end
+			elseif path == "/" then
+				res:setHeader("Content-Type", "text/plain")
+				body = "Welcome! This webserver is functioning properly."
 			else
-				body = "Bad password"
+				res:setHeader("Content-Type", "text/plain")
+				body = "Invalid request"
 			end
 			res:setHeader("Content-Length", #body)
 			res:finish(body)

@@ -41,12 +41,14 @@ return function(ENV)
 
 		["send"] = function(self, message) -- Debug Command (No text filter)
 			local msgcontent = string.sub(message.content, string.len(prefix) + string.len(self) + 2)
-			postAsync(serverUrl, {username = message.member.name, content = msgcontent, level = 4})
+			--postAsync(serverUrl, {username = message.member.name, content = msgcontent, level = 4})
+			server.Content = {username = message.member.name, content = msgcontent, level = 4, id = randomString(7)}
 		end;
 
 		["clear"] = function(self, message)
 			activated = false
-			postAsync(serverUrl, {"Hello! Hello! Hello! Hello! How Low?"})
+			--postAsync(serverUrl, {"Hello! Hello! Hello! Hello! How Low?"})
+			server.Content = "Hello! Hello! Hello! Hello! How Low?"
 			message:reply("`Successfully cleared the server communication file.`")
 		end;
 
@@ -56,8 +58,8 @@ return function(ENV)
 			if not selected then
 				selected = channel:createWebhook(webhookName)
 			end
-			server.Webhook = "https://discordapp.com/api/webhooks/".. selected.id .."/".. selected.token
 			--postAsync(serverUrl, {username = message.member.name, content = webhookUrl, level = 4, command = "setwebhook"})
+			server.Webhook = "https://discordapp.com/api/webhooks/".. selected.id .."/".. selected.token
 			message:reply("`Successfully set current channel as communcations channel.`")
 		end;
 
