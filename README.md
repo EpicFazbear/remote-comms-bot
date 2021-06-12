@@ -3,7 +3,7 @@
 A heavily modified version of my original Discord Lua bot.
 This bot's main purpose is communicating to the remote admin server for sending messages/commands to linked Roblox games.
 
-I may or may not release the Roblox scripts I made to make a full connection between Roblox and Discord (They're not that hard to replicate anyways). As of now, the code for this bot is available for public use.
+**[!]** I'm preparing to soon release the Roblox scripts I made to make the full connection between Roblox and Discord. Once I release it, more instructions as well as a link to the Model will be added in this README file.
 
 - Requires [Luvit](https://luvit.io/) and [Discordia](https://github.com/SinisterRectus/Discordia) in order to run. (Only if you run this on your computer)
 - Configurable in the .env file. (Only if you run this on your computer)
