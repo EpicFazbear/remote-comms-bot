@@ -26,7 +26,7 @@ return function(ENV)
 			if path == "/messages" then
 				if passed == true then
 					res:setHeader("Content-Type", "text/plain")
-					res:setHeader("Webhook-URL", tostring(self.Webhook))
+					--res:setHeader("Webhook-URL", tostring(self.Webhook))
 					body = json.encode(self.Content)
 				else
 					body = "Bad password"

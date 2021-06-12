@@ -90,7 +90,7 @@ client:on("messageCreate", function(message)
 			message:delete()
 		end
 		--postAsync(serverUrl, {username = username, content = content, level = level, id = randomString(7)})
-		server.Content = {username = username, content = content, level = level, id = randomString(7)}
+		server.Content = {username = username, content = content, level = level, id = randomString(7), webhook = server.Webhook}
 	end
 end)
 

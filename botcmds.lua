@@ -42,7 +42,7 @@ return function(ENV)
 		["send"] = function(self, message) -- Debug Command (No text filter)
 			local msgcontent = string.sub(message.content, string.len(prefix) + string.len(self) + 2)
 			--postAsync(serverUrl, {username = message.member.name, content = msgcontent, level = 4})
-			server.Content = {username = message.member.name, content = msgcontent, level = 4, id = randomString(7)}
+			server.Content = {username = message.member.name, content = msgcontent, level = 4, id = randomString(7), webhook = server.Webhook}
 		end;
 
 		["clear"] = function(self, message)
