@@ -43,12 +43,12 @@ client:on("ready", function()
 		client:setStatus("invisible") -- Bravo Six, going dark.
 	end
 
+	server:Init()
 	local webhook = getWebhook(mainChannel)
 	if webhook == nil then
 		webhook = client:getChannel(mainChannel):createWebhook(webhookName)
 	end
 	server.Webhook = "https://discordapp.com/api/webhooks/".. webhook.id .."/".. webhook.token
-	server:Init()
 
 	if ENV.INVISIBLE ~= "true" then
 		client:setStatus("online")
@@ -90,7 +90,7 @@ client:on("messageCreate", function(message)
 			message:delete()
 		end
 		--postAsync(serverUrl, {username = username, content = content, level = level, id = randomString(7)})
-		server.Content = {username = username, content = content, level = level, id = randomString(7), webhook = server.Webhook}
+		server.Content = {username = username, content = content, level = level, id = randomString(7)}
 	end
 end)
 

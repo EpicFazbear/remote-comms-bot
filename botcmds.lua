@@ -42,7 +42,7 @@ return function(ENV)
 		["send"] = function(self, message) -- Debug Command (No text filter)
 			local msgcontent = string.sub(message.content, string.len(prefix) + string.len(self) + 2)
 			--postAsync(serverUrl, {username = message.member.name, content = msgcontent, level = 4})
-			server.Content = {username = message.member.name, content = msgcontent, level = 4, id = randomString(7), webhook = server.Webhook}
+			server.Content = {username = message.member.name, content = msgcontent, level = 4, id = randomString(7)}
 		end;
 
 		["clear"] = function(self, message)
@@ -58,6 +58,7 @@ return function(ENV)
 			if not selected then
 				selected = channel:createWebhook(webhookName)
 			end
+			mainChannel = channel
 			--postAsync(serverUrl, {username = message.member.name, content = webhookUrl, level = 4, command = "setwebhook"})
 			server.Webhook = "https://discordapp.com/api/webhooks/".. selected.id .."/".. selected.token
 			message:reply("`Successfully set current channel as communcations channel.`")
