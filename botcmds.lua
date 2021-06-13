@@ -48,7 +48,7 @@ return function(ENV)
 		["clear"] = function(self, message)
 			activated = false
 			--postAsync(serverUrl, {"Hello! Hello! Hello! Hello! How Low?"})
-			server.Content = "Hello! Hello! Hello! Hello! How Low?"
+			server.Content = ""
 			message:reply("`Successfully cleared the server communication file.`")
 		end;
 
@@ -58,7 +58,7 @@ return function(ENV)
 			if not selected then
 				selected = channel:createWebhook(webhookName)
 			end
-			mainChannel = channel
+			mainChannel = channel.id
 			--postAsync(serverUrl, {username = message.member.name, content = webhookUrl, level = 4, command = "setwebhook"})
 			server.Webhook = "https://discordapp.com/api/webhooks/".. selected.id .."/".. selected.token
 			message:reply("`Successfully set current channel as communcations channel.`")
