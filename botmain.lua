@@ -54,6 +54,8 @@ client:on("ready", function()
 		client:setStatus("online")
 		if string.lower(ENV.STATUS) ~= "none" then
 			client:setGame(ENV.STATUS)
+		else
+			client:setGame(nil)
 		end
 		message:setContent(message.content .. "\n***{!} Communications bot has been activated {!}***")
 	end
