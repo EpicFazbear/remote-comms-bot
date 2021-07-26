@@ -23,19 +23,17 @@ return function(ENV)
 			end
 
 			local path = req.url
-			if path == "/messages" then
+			res:setHeader("Content-Type", "text/plain")
+			if path == "/" or path == "/messages" then
 				if passed == true then
 					res:setHeader("Content-Type", "text/plain")
 					res:setHeader("Webhook-URL", tostring(self.Webhook))
 					body = json.encode(self.Content)
 				else
-					body = "Bad password"
+					--body = "Bad password"
+					body = "Welcome! This webserver is functioning properly."
 				end
-			elseif path == "/" then
-				res:setHeader("Content-Type", "text/plain")
-				body = "Welcome! This webserver is functioning properly."
 			else
-				res:setHeader("Content-Type", "text/plain")
 				body = "Invalid request"
 			end
 			res:setHeader("Content-Length", #body)
