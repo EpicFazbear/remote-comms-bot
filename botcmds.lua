@@ -27,6 +27,7 @@ return function(ENV)
 			"\n\n```This bot is in active development."..
 			"\nFor user/userid commands: You can only run UserIds one at a time, while you could also mention multiple users in one message for all of them to be affected."..
 			"\nIf you would like to make a contribution to this bot, feel free to stop by the GitHub repository linked here: https://github.com/EpicFazbear/remote-comms-bot```")
+			-- The creator and developer of this bot is Mattsoft#0074
 		end;
 
 		["enable"] = function(self, message)
