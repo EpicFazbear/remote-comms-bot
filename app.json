@@ -17,7 +17,7 @@
 		"description": "The user token that the bot will run from."
 	},
 	"INVISIBLE": {
-		"description": "Determines whether or not the bot will be invisible when turned on.",
+		"description": "Determines whether or not the bot will be invisible when turned on. (true = Invisible)",
 		"value": "false"
 	},
 	"MAIN_CHANNEL": {
@@ -31,6 +31,10 @@
 		"description": "The prefix used to run commands. Messages that start with this prefix will be ignored by the commications link.",
 		"value": ";"
 	},
+	"SILENT_STARTUP": {
+		"description": "Determines whether or not the bot will print out a message every time it activates. (true = No message)",
+		"value": "true"
+	},
 	"STATUS": {
 		"description": "What the bot's user status will be set to when it is online.",
 		"value": "None"
@@ -40,7 +44,7 @@
 		"value": "Hello! Hello! Hello! Hello! How Low?"
 	},
 	"WHITELIST_ONLY": {
-		"description": "Changes whether or not only admins and whitelisted users can access the bot and its communcations.",
+		"description": "Changes whether or not only admins and whitelisted users can access the bot and its communcations. (true = Whitelist-restricted)",
 		"value": "false"
 	},
 	"WHITELISTED": {

@@ -13,11 +13,13 @@ client = discordia.Client()
 activated = true
 prefix = ENV.PREFIX
 whitelistOnly = ENV.WHITELIST_ONLY == "true"
+isInvisible = ENV.INVISIBLE == "true"
+silentStartup = ENV.SILENT_STARTUP == "true"
+status = ENV.STATUS
 webhookName = ENV.WEBHOOK_NAME
 --serverUrl = ENV.SERVER_URL
 mainChannel = ENV.MAIN_CHANNEL
-ownerOverride = ENV.OWNER_OVERRIDE
-if ownerOverride == "" then ownerOverride = nil end
+ownerOverride = (ENV.OWNER_OVERRIDE ~= "" and ENV.OWNER_OVERRIDE or nil)
 admins = json.decode(ENV.ADMINS)
 whitelisted = json.decode(ENV.WHITELISTED)
 blacklisted = json.decode(ENV.BLACKLISTED)
@@ -35,8 +37,14 @@ client:on("ready", function()
 	print("Starting bot..")
 	owner = ownerOverride or client.owner.id
 	local message
-	if ENV.INVISIBLE ~= "true" then
-		message = client:getChannel(mainChannel):send("***Starting bot..***")
+	if isInvisible == false then
+		if silentStartup == false then
+			if mainChannel ~= nil and mainChannel ~= "" then
+				message = client:getChannel(mainChannel):send("***Starting bot..***")
+			else
+				message = client:getUser(owner):getPrivateChannel():send("***Starting bot..***")
+			end
+		end
 		client:setStatus("idle")
 		client:setGame("Initializing..")
 	else
@@ -50,14 +58,16 @@ client:on("ready", function()
 	end
 	server.Webhook = "https://discordapp.com/api/webhooks/".. webhook.id .."/".. webhook.token
 
-	if ENV.INVISIBLE ~= "true" then
+	if isInvisible == false then
 		client:setStatus("online")
-		if string.lower(ENV.STATUS) ~= "none" then
-			client:setGame(ENV.STATUS)
+		if string.lower(status) ~= "none" then
+			client:setGame(status)
 		else
 			client:setGame(nil)
 		end
-		message:setContent(message.content .. "\n***{!} Communications bot has been activated {!}***")
+		if message then
+			message:setContent(message.content .. "\n***{!} Communications bot has been activated {!}***")
+		end
 	end
 	print("***{!} Communications bot has been activated {!}***")
 end)
