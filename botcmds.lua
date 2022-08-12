@@ -1,13 +1,13 @@
 -- The entire of commands that are registered on the Bot. --
 
 return function(ENV)
-	setfenv(1, ENV) -- Connects the main environment from botmain.lua into this file.
+	setfenv(1, ENV); -- Connects the main environment from botmain.lua into this file.
 
 	return {
 		["help"] = function(self, message)
 			message:reply("`Prefix = \"".. prefix .."\"`"..
 			"\n**ADMINS+ ARE ONLY ALLOWED TO RUN THESE COMMANDS.**"..
-			"\n\nThese are all of the admin-only commands.."..
+			"\n\nThese are all of the admin-only commands:"..
 			"\n			`enable` - Enables the chat hook"..
 			"\n			`disable` - Disables the chat hook"..
 			"\n			`clear` - Clears the communication file"..
@@ -20,14 +20,14 @@ return function(ENV)
 			"\n			`blacklisted` - Displays the usernames of all blacklisted users"..
 			"\n			`setchannel` - Sets the current channel as the communcations channel"..
 			"\n			`send <message>` - Debug command that sends your message to the server (Note that this is unfiltered)"..
-			"\n\nThese are all of the owner-only commands (The owner of this bot is: `".. getTag(owner) .." - [".. owner .."]`).."..
+			"\n\nThese are all of the owner-only commands: (The owner of this bot is - `".. getTag(owner) .." - [".. owner .."]`)"..
 			"\n			`admin <user/userid>` - Admins the mentioned user or userid"..
 			"\n			`unadmin <user/userid>` - Unadmins the mentioned user or userid"..
 			"\n			`admins` - Displays the usernames of all current admins"..
 			"\n\n```This bot is in active development."..
 			"\nFor user/userid commands: You can only run UserIds one at a time, while you could also mention multiple users in one message for all of them to be affected."..
 			"\nIf you would like to make a contribution to this bot, feel free to stop by the GitHub repository linked here: https://github.com/EpicFazbear/remote-comms-bot```")
-			-- The creator and developer of this bot is Mattsoft#0074
+			-- The creator and developer of this bot is Fazsune#0074
 		end;
 
 		["enable"] = function(self, message)

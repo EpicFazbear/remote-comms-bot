@@ -19,7 +19,7 @@ status = ENV.STATUS
 webhookName = ENV.WEBHOOK_NAME
 --serverUrl = ENV.SERVER_URL
 mainChannel = ENV.MAIN_CHANNEL
-ownerOverride = (ENV.OWNER_OVERRIDE ~= "" and ENV.OWNER_OVERRIDE or nil)
+ownerOverride = ((ENV.OWNER_OVERRIDE ~= "" and ENV.OWNER_OVERRIDE ~= "OWNER_ID") and ENV.OWNER_OVERRIDE or nil)
 admins = json.decode(ENV.ADMINS)
 whitelisted = json.decode(ENV.WHITELISTED)
 blacklisted = json.decode(ENV.BLACKLISTED)
