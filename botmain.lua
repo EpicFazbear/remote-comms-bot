@@ -46,8 +46,9 @@ client:on("ready", function()
 			end
 		end
 		client:setStatus("idle")
-		client:setGame("Initializing..")
+		client:setActivity("Initializing..")
 	else
+		print("Invisible mode..")
 		client:setStatus("invisible") -- Bravo Six, going dark.
 	end
 
@@ -61,9 +62,9 @@ client:on("ready", function()
 	if isInvisible == false then
 		client:setStatus("online")
 		if string.lower(status) ~= "none" then
-			client:setGame(status)
+			client:setActivity(status)
 		else
-			client:setGame(nil)
+			client:setActivity(nil)
 		end
 		if message then
 			message:setContent(message.content .. "\n***{!} Communications bot has been activated {!}***")
