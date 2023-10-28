@@ -48,7 +48,7 @@ client:on("ready", function()
 		client:setStatus("idle")
 		client:setActivity("Initializing..")
 	else
-		print("Invisible mode..")
+		print("Invisible mode is active..")
 		client:setStatus("invisible") -- Bravo Six, going dark.
 	end
 

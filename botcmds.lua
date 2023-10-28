@@ -180,5 +180,12 @@ return function(ENV)
 				end
 			end
 		end;
+
+		["stop"] = function(self, message)
+			if message.author.id == owner then
+				message:reply("```Stopping processes and disconnecting from all shards..```")
+				client:stop()
+			end
+		end;
 	};
 end;
